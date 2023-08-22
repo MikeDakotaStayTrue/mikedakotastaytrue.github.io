@@ -11,9 +11,11 @@ social: true  # includes social icons at the bottom of the page
 ---
 
 ### Short Biography
-I am a 23 y.o. AppSec engineer, sometimes play drum kit and mario kart
+I am a 23 y.o. pentester and AppSec engineer from Saint-Petersburg \
+Sometimes play drums, mario kart and like akinformation.com
 
 ### Links
 [HackTheBox](https://app.hackthebox.com/users/647622)\
 [LinkedIn](https://www.linkedin.com/in/yuriy-palikshanov-084271248/)\
-[Telegram](https://t.me/palikshan)
+[Telegram](https://t.me/palikshan)\
+[GitHub](https://github.com/MikeDakotaStayTrue)

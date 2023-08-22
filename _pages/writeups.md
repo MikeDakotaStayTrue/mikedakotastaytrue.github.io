@@ -2,7 +2,7 @@
 layout: page
 title: writeups
 permalink: /writeups/
-description: A growing collection of your cool projects.
+description: competitions and ctfs
 nav: true
 nav_order: 2
 display_categories: [hackthebox]
