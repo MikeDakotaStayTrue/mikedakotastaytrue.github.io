@@ -4,7 +4,6 @@ title: Sau
 img: assets/img/writeups/hackthebox/Sau/sau_logo.png
 importance: 1
 category: hackthebox
-related_publications: einstein1956investigations, einstein1950meaning
 ---
 
 ## Foothold
