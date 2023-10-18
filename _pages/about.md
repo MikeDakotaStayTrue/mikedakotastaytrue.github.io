@@ -12,7 +12,7 @@ social: true  # includes social icons at the bottom of the page
 
 ### Short Biography
 I am a 23 y.o. pentester and AppSec engineer from Saint-Petersburg \
-Sometimes play drums, mario kart and like akinformation.com
+Sometimes play drums, play mario kart and learn arabic
 
 ### Links
 [HackTheBox](https://app.hackthebox.com/users/647622)\
