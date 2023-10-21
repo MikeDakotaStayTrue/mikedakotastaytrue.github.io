@@ -179,5 +179,28 @@ Just as in the case of biometrics, check the entire flow: generating a key, addi
 1. It is necessary to check whether the key can be restored using the values from shared_prefs.
 2. Is EncryptedSharedPreferences used for sensitive data
 
+---
+
+### Timeout no reauthentication
+Applications that handle sensitive data should, as a good security practice, re-prompt for a PIN or another authentication after some time of inactivity.\
+The blocking time should be within reasonable limits.
+
+Possible steps to check:
+* Disable auto-lock screen
+* Log in to the application
+* Check the PIN code request when the application is open
+  + Leave the application open for some time (for example 15 minutes)
+  + If the application does not ask you to enter the PIN code again, then the application is vulnerable 
+* Check the PIN code request when the application is minimized
+  + Minimize the application and leave it for a while
+  + We return to the application and check the appearance of the PIN code entry window
+
+---
+
+### Keyboard cache
+Check text fields that can process sensitive data for the presence of the __textNoSuggestions__ flag, as in the code below:
+```xml
+<EditText android:id="@+id/KeyBoardCache" android:inputType="textNoSuggestions"/>
+```
 
 ---
