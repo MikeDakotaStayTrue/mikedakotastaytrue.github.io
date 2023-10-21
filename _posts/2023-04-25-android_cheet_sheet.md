@@ -2,16 +2,16 @@
 layout: post
 title: Android cheet sheet
 date: 2023-10-18 10:14:00-0400
-description: check list of android application for appsec-engineers
+description: Check list of android application for AppSec-engineers
 tags: android appsec cheetsheet
-categories: sample-posts
+categories: cheetsheet
 giscus_comments: true
 related_posts: false
 toc:
   sidebar: left
 ---
 
-{% include figure.html path="assets/img/android.jpg" title="example image" class="img-fluid rounded z-depth-1" %}
+{% include figure.html path="assets/img/android.jpg" title="android_cheetsheet" class="img-fluid rounded z-depth-1" %}
 
 
 ### Introduction
@@ -20,8 +20,20 @@ This post contains a list of checks that must be performed when testing the cybe
 Each described check, if possible, includes tools that can be used and commands.
 <br/><br/>
 
-### No SSL-Pinning
+### No SSL-pinning
 {:data-toc-text="No SSL-Pinning"}
+Lack of SSL-pinning significantly simplify MITM-attacks.
+Just set third-party certificate to device, and try to proxy traffic.
+
+Example of adb commands for installing certificate:
+```bash
+adb root
+adb remount
+adb push 9a5ba575.0 /system/etc/security/cacerts/
+adb shell chmod 664 /system/etc/security/cacerts/9a5ba575.0
+```
+
+Let's skip details about this vulnerability, because there are too many articles and information on it on the internet.
 
 ---
 
@@ -50,11 +62,7 @@ Recommended to maximum interact parts of application which use user data to leak
 Check at the backend's caching permission - the Cache-Control HTTP-Header does not contain the no-cache, no-store, must-revalidate directive for authorization requests and responses.\
 If it is, grep for various sensitive data in /data/data/android_app/cache.
 
-#### shared prefs
-soon
-
 ---
-
 
 ### Tapjacking
 Analogue of web-vulnerability clickjacking for Android. \
@@ -64,15 +72,15 @@ Check it by installing [APK](https://github.com/dzmitry-savitski/tapjacker) and 
 ---
 
 ### AndroidManifest.xml misconfig
-Check backup is not allowed (android:allowBackup=true) \
-Check debug mode is turned off (android:debuggable=true) \
-Check unsecured traffic not permitted (android:usesCleartextTraffic=true)
+Check backup is not allowed (__android:allowBackup=true__) \
+Check debug mode is turned off (__android:debuggable=true__) \
+Check unsecured traffic not permitted (__android:usesCleartextTraffic=true__)
 
 ---
 
 ### network_security_config.xml misconfig
 Config file path - resources/res/xml/network_security_config.xml. \
-If network_security_config is specified in the AndroidManifest.xml, then it is worth checking for the presence of the cleartextTrafficPermitted="true" setting and the trust-anchors tag.
+If network_security_config is specified in the AndroidManifest.xml, then it is worth checking for the presence of the __cleartextTrafficPermitted="true"__ setting and the trust-anchors tag.
 
 Example of vulnerable config:
 ```xml
@@ -98,8 +106,8 @@ Vulnerable hashing algorithms: MD5, MD4, SHA1 \
 Recommended: AES and SHA-256
 
 #### Random function
-Bad decision for generating numbers of sensetive data - java.util.Random.\
-Good one - java.security.SecureRandom.
+Bad decision for generating numbers of sensetive data - __java.util.Random__\
+Good one - __java.security.SecureRandom__
 
 ---
 
@@ -202,5 +210,11 @@ Check text fields that can process sensitive data for the presence of the __text
 ```xml
 <EditText android:id="@+id/KeyBoardCache" android:inputType="textNoSuggestions"/>
 ```
+
+### Emulator detection
+
+---
+
+### Root user detection
 
 ---
