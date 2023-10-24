@@ -215,6 +215,21 @@ Check text fields that can process sensitive data for the presence of the __text
 
 ---
 
-### Root user detection
+### Root detection
+Detection is straight-forward: try to run the application on a rooted Android device and check if it gives a warning or stops running.
+
+A good binary security practice with root detection is using two more different type of checks.\
+Some check examples:
+* Searching file like su, busybox, supersu, Superuser.apk, KingoUser.apk, SuperSu.apk, magisk and e.t.c.
+* Searching for root packages like __com.noshufou.android.su__, __com.noshufou.android.su.elite__, __eu.chainfire.supersu__, __com.koushikdutta.superuser__ and e.t.c.
+* Checking system properties: __ro.build.selinux__, __ro.debuggable__, __service.adb.root__, __ro.secure__
+* Check if it has rights to read/write private folders/files (__File.canRead__, __File.canWrite__ and C-function __access()__)
+* Check if it has rights to run root commands (for example via function below)
+```java
+process = Runtime.getRuntime().exec(new String[]{"which", "su"});
+```
+* Check running of root proccess (for example via __ActivityManager.getRunningAppProcesses__ or __getRecentTasks__) 
+
+Thanks to Stingray for [material](https://saas.stingray-mobile.ru/knowledgebase/2023.6/rg/ru/android/insufficient_root_access_check/).
 
 ---
