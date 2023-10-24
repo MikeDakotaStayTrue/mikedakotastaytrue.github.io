@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Android cheet sheet
-date: 2023-10-21 10:14:00-0400
+date: 2023-10-24 10:14:00-0400
 description: Check list of android application for AppSec-engineers
 tags: android appsec cheetsheet
 categories: cheetsheet
@@ -138,6 +138,9 @@ It is necessary to check that the __setInvalidatedByBiometricEnrollment__ option
 Look at the entire biometrics verification flow: generating a key, adding it to the keystore, interacting with share_prefs, creating a CryptoObject, checking all cryptographic algorithms that are used, e.t.c.\
 Useful video is [here](https://www.youtube.com/watch?v=uN6IocCyIF0&t=1207s).
 
+
+[Methods](https://book.hacktricks.xyz/mobile-pentesting/android-app-pentesting/bypass-biometric-authentication-android) to bypass biometric in Android.
+
 ---
 
 ### ProGuard turned off
@@ -211,7 +214,20 @@ Check text fields that can process sensitive data for the presence of the __text
 <EditText android:id="@+id/KeyBoardCache" android:inputType="textNoSuggestions"/>
 ```
 
+---
+
 ### Emulator detection
+Detection is straight-forward: try to run the application on a emulated Android device (Android studio, genymotion) and check if it gives a warning or stops running.
+
+A good binary security practice with emulator detection is using two more different type of checks.\
+Some check examples:
+
+* Searching for files specific to different emulators: __qemu_trace__, __qemu-props__, __/dev/socket/genyd__, __genyd__ and e.t.c.
+* Checking system properties: __ro.debuggable__, __ro.kernel.android.qemud__, __ro.kernel.qemu.gles__
+* Checking classes fields like Build: "FINGERPRINT", "MODEL", "MANUFACTURER", "BRAND", "BOARD", "ID", "SERIAL", "TAGS", "USER", "HARDWARE","PRODUCT", "TYPE".
+* Telephony check: phone number in the list of known fake numbers, device_id in the list of known fake device_ids, e.t.c.
+
+Thanks to Stingray for [material](https://saas.stingray-mobile.ru/knowledgebase/2023.6/rg/ru/android/insufficient_emulator_start-up_check/).
 
 ---
 
@@ -220,15 +236,15 @@ Detection is straight-forward: try to run the application on a rooted Android de
 
 A good binary security practice with root detection is using two more different type of checks.\
 Some check examples:
-* Searching file like su, busybox, supersu, Superuser.apk, KingoUser.apk, SuperSu.apk, magisk and e.t.c.
+* Searching for files like su, busybox, supersu, Superuser.apk, KingoUser.apk, SuperSu.apk, magisk and e.t.c.
 * Searching for root packages like __com.noshufou.android.su__, __com.noshufou.android.su.elite__, __eu.chainfire.supersu__, __com.koushikdutta.superuser__ and e.t.c.
 * Checking system properties: __ro.build.selinux__, __ro.debuggable__, __service.adb.root__, __ro.secure__
-* Check if it has rights to read/write private folders/files (__File.canRead__, __File.canWrite__ and C-function __access()__)
-* Check if it has rights to run root commands (for example via function below)
+* Checking if it has rights to read/write private folders/files (__File.canRead__, __File.canWrite__ and C-function __access()__)
+* Checking if it has rights to run root commands (for example via function below)
 ```java
 process = Runtime.getRuntime().exec(new String[]{"which", "su"});
 ```
-* Check running of root proccess (for example via __ActivityManager.getRunningAppProcesses__ or __getRecentTasks__) 
+* Checking running of root proccess (for example via __ActivityManager.getRunningAppProcesses__ or __getRecentTasks__) 
 
 Thanks to Stingray for [material](https://saas.stingray-mobile.ru/knowledgebase/2023.6/rg/ru/android/insufficient_root_access_check/).
 
