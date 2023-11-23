@@ -12,9 +12,8 @@ social: true  # includes social icons at the bottom of the page
 
 ### Short Biography
 I am a 23 y.o. pentester and AppSec engineer from Saint-Petersburg \
-Sometimes play drums, play mario kart and learn arabic
+Sometimes play drums, play mario kart and learn arabic 
 
-{% include figure.html path="assets/img/portswigger.png" title="portswigger" class="rounded float-right" width="500"%}
 
 ### Links
 [HackTheBox](https://app.hackthebox.com/users/647622)\
