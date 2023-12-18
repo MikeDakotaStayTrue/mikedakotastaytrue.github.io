@@ -6,25 +6,36 @@ importance: 1
 category: hackthebox
 ---
 
-Port scanning - 22 (ssh), 80 (web), 1863 (filtred?) and 7100 (filtred?)
-Add machine address to /etc/hosts as surveillance.htb and let's get started.
+Port scanning result:
+* 22 (ssh)
+* 80 (web)
+* 1863 (filtred or fp)
+* 7100 (filtred or fp)
+
+Add machine address to ```/etc/hosts``` as **surveillance.htb** and let's get started.
 
 ## Foothold
-It's a default landing web page, but useful browser extension Wappalyzer specified CraftCMS.
+It's a default landing web page, but useful browser extension [Wappalyzer](https://www.wappalyzer.com) specified CraftCMS.
 
 {% include figure.html path="assets/img/writeups/hackthebox/Surveillance/surveillance_landing_page.png" title="example image" class="img-fluid rounded z-depth-1" %}
 
-Also, that information can be found in footer of landing page - https://github.com/craftcms/cms/tree/4.4.14.
+Also, that information can be found in footer of landing page - [LINK](https://github.com/craftcms/cms/tree/4.4.14).
 CraftCMS is a "flexible, user-friendly CMS for creating custom digital experiences on the web and beyond", and written in PHP.
 Google some CVEs and security issues, and it will be found a CVE-2023-41892.
 
 ### CVE-2023-41892
 CVE-2023-41892 is Unanticated RCE for CraftCMS. This is a high-impact, low-complexity attack vector. Users running Craft installations before 4.4.15 are encouraged to update to at least that version to mitigate the issue. This issue has been fixed in Craft CMS 4.4.15.
 
+There is really good description of that CVE on Calif's [blog](https://blog.calif.io/p/craftcms-rce).
+
+In short, one of controller class contains method (beforeAction) with object creation and some gadget chains can do some destruct action, including arbitrary file inclusion.
+
+Later, for detect vulnerability it can be used to call arbitrary method, like phpinfo via \\GuzzleHttp\\Psr7\\FnStream.\
+Or, to achive RCE via arbitrary PHP file inclusion using Imagick class chain.\
 Our version is 4.4.14 and it means that it's vulnerable.
 
 ## User
-First, lets inject "phpinfo" command to be confident that exploit can be done successfully.
+First, lets inject "phpinfo" method to be confident that exploit can be executed successfully.
 
 ```HTTP
 POST / HTTP/1.1
@@ -45,7 +56,7 @@ It could be useful to get some information, MySQL credentials, secret key, but w
 
 PoC i [found](https://gist.github.com/to016/b796ca3275fa11b5ab9594b1522f7226) was unstable for me, but working.
 
-{% include figure.html path="assets/img/writeups/hackthebox/Surveillance/surveillance_craft_revshell2.png" title="example image" class="img-fluid rounded z-depth-1" %}
+{% include figure.html path="assets/img/writeups/hackthebox/Surveillance/surveillance_craft_revshell2.png" title="example image" class="img-fluid rounded z-depth-1 col-md-12" %}
 
 {% include figure.html path="assets/img/writeups/hackthebox/Surveillance/surveillance_craft_revshell.png" title="example image" class="img-fluid rounded z-depth-1" %}
 
@@ -54,6 +65,8 @@ Without linpeas, little manual enumeration and found database backup file - surv
 Here is a hashed (SHA256) password of matthew user - crack it, get SSH shell and obtain user flag.
 
 {% include figure.html path="assets/img/writeups/hackthebox/Surveillance/surveillance_crack.png" title="example image" class="img-fluid rounded z-depth-1" %}
+
+{% include figure.html path="assets/img/writeups/hackthebox/Surveillance/surveillance_user_obtain.png" title="example image" class="img-fluid rounded z-depth-1" %}
 
 ## Root
 linpeas.sh will give a huge hint about one service - ZoneMinder. In the instance, nginx config will disclosure needed information. 
@@ -64,14 +77,25 @@ Moreover, linpeas greps password from config files.
 {% include figure.html path="assets/img/writeups/hackthebox/Surveillance/surveillance_zoneminder_pass.png" title="example image" class="img-fluid rounded z-depth-1" %}
 
 
-[?] Some googling about that service - CVE-2023-26035, unauthicated RCE. Let's do some pivoting for comfort:
+Some googling about that service - CVE-2023-26035. 
+
+### CVE-2023-41892
+CVE-2023-41892 is Unauthenticated RCE via Missing Authorization in ZoneMinder vulnerability.\
+There are no permissions check on the snapshot action, which expects an id to fetch an existing monitor but can be passed an object to create a new one instead. TriggerOn ends up calling shell_exec using the supplied Id.
+
+Problem was fixed by adding validation to Monitor ID and require authentication before processing actions. In addition, validate Monitor ID before calling shell commands.
+
+{% include figure.html path="assets/img/writeups/hackthebox/Surveillance/surveillance_github_commits.png" title="example image" class="img-fluid rounded z-depth-1" %}
+
+
+Let's do some pivoting for comfort:
 
 ```bash
 ssh -L 1234:localhost:8080 matthew@surveillance.htb
 ```
 
 As we have an SSH connection, we can use it for port forwarding. Local port 8080 of victim host will forward to our 1234 port.
-That's why it could be possible to use (PoC)[https://github.com/rvizx/CVE-2023-26035] on local machine:
+That's why it could be possible to use [PoC](https://github.com/rvizx/CVE-2023-26035) on local machine:
 
 {% include figure.html path="assets/img/writeups/hackthebox/Surveillance/surveillance_web_pivot.png" title="example image" class="img-fluid rounded z-depth-1" %}
 
@@ -99,3 +123,7 @@ sudo zmupdate.pl --version=1 --user='$(/tmp/exploit.sh)' --pass=ZoneMinderPasswo
 Bash script in /tmp/exploit.sh will run with root privilegies. Ive just write reading root flag and save to tmp directory.
 
 {% include figure.html path="assets/img/writeups/hackthebox/Surveillance/surveillance_run_privesc.png" title="example image" class="img-fluid rounded z-depth-1" %}
+
+Finnaly, getting root flag:
+
+{% include figure.html path="assets/img/writeups/hackthebox/Surveillance/surveillance_getting_root_flag.png" title="example image" class="img-fluid rounded z-depth-1" %}
