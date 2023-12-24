@@ -11,7 +11,7 @@ toc:
   sidebar: left
 ---
 
-{% include figure.html path="assets/img/android.jpg" title="android_cheetsheet" class="img-fluid rounded z-depth-1" %}
+{% include figure.html path="assets/img/posts/android/android.jpg" title="android_cheetsheet" class="img-fluid rounded z-depth-1" %}
 
 
 ### Introduction
