@@ -37,12 +37,12 @@ There is [google table](https://docs.google.com/spreadsheets/d/1dwSMIAPIam0PuRBk
 
 There are machines i've added to "machines to do" list:
 
-* Blocky (Easy)
-* Help (Easy)
-* Schooled (Medium)
+* Blocky (Easy) +
+* Help (Easy) +
+* Schooled (Medium) 
 * Magic (Medium)
 * JSON (Medium)
-* Popcorn (Medium)
+* Popcorn (Medium) +
 * Unattended (Medium)
 * Celestial (Medium)
 * Vault (Medium)
@@ -76,5 +76,13 @@ Exploit-db have a Python-version [exploit](https://www.exploit-db.com/exploits/4
 Here is [link](https://github.com/MikeDakotaStayTrue/Script4You/blob/main/helpdeskz_sqli_exploit.go) to my GitHub. Some coding was interesting and useful, that was my first full script on Golang.
 
 {% include figure.html path="assets/img/posts/oswe_preparation/help_sqli.png" title="oswe_preparation" class="img-fluid rounded z-depth-1" %}
+
+
+#### Popcorn
+Simple task to create PHP-shell for uploading, but bypassing some restrictions via injecting image magic bytes in shell. My choice was PNG.
+
+{% include figure.html path="assets/img/posts/oswe_preparation/popcorn_png.png" title="oswe_preparation" class="img-fluid rounded z-depth-1" %}
+
+Most cofortable for that task was Python, by my opinion, here is [link](https://github.com/MikeDakotaStayTrue/Script4You/blob/main/upload_php_png.py) to script.
 
 ---
