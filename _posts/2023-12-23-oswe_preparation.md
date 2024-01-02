@@ -19,6 +19,8 @@ toc:
 Start of preparation for [OSWE](https://www.offsec.com/courses/web-300/) exam from OffSec :)\
 Wanna blog my progress to preparations - share links, progress, minds about and e.t.c
 
+---
+
 ### Сollecting material to study
 {:data-toc-text="Material"}
 
@@ -36,7 +38,6 @@ There is [google table](https://docs.google.com/spreadsheets/d/1dwSMIAPIam0PuRBk
 There are machines i've added to "machines to do" list:
 
 * Blocky (Easy)
-* Toolbox (Easy)
 * Help (Easy)
 * Schooled (Medium)
 * Magic (Medium)
@@ -52,6 +53,28 @@ There are machines i've added to "machines to do" list:
 * Sink (Insane)
 
 Also, was found a nice [link](https://github.com/snoopysecurity/OSWE-Prep) that can be used too.
-<br/><br/>
+
+---
+ 
+### HTB Machines
+Next are reviews of hackthebox labs which have some OSWE-like challanges. I'm not going to describe every machine with full write up, I only notice key moments.
+
+
+#### Blocky
+Simply, dowload JD-GUI and explore couple of jar-files, located in [http://blocky.htb/plugins/](http://blocky.htb/plugins/).
+
+JD-GUI is a standalone graphical utility that displays Java source codes of ".class" files. You can browse the reconstructed source code with the JD-GUI for instant access to methods and fields.
+
+{% include figure.html path="assets/img/posts/oswe_preparation/blocky_jd_gui.png" title="oswe_preparation" class="img-fluid rounded z-depth-1" %}
+
+
+#### Help
+SQL injection in 1.0.2 of HelpDeskZ - free PHP based software which allows to manage site's support with a web-based support ticket system.
+
+Exploit-db have a Python-version [exploit](https://www.exploit-db.com/exploits/41200) for that CVE, but i've decided to create my own, Golang version, only for practice.
+
+Here is [link](https://github.com/MikeDakotaStayTrue/Script4You/blob/main/helpdeskz_sqli_exploit.go) to my GitHub. Some coding was interesting and useful, that was my first full script on Golang.
+
+{% include figure.html path="assets/img/posts/oswe_preparation/help_sqli.png" title="oswe_preparation" class="img-fluid rounded z-depth-1" %}
 
 ---
