@@ -141,5 +141,10 @@ And [link](https://github.com/MikeDakotaStayTrue/Script4You/blob/main/blind_sqli
 
 {% include figure.html path="assets/img/posts/oswe_preparation/falafel_sqli_pass.png" title="oswe_preparation" class="img-fluid rounded z-depth-1" %}
 
+<br/><br/>
+
+### Buying WEB-300
+In middle of January 2024, my company bought me the course for my own account.
+{% include figure.html path="assets/img/posts/oswe_preparation/web300.png" title="oswe_preparation" class="img-fluid rounded z-depth-1" %}
 
 ---
