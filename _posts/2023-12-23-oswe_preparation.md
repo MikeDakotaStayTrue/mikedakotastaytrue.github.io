@@ -147,4 +147,8 @@ And [link](https://github.com/MikeDakotaStayTrue/Script4You/blob/main/blind_sqli
 In middle of January 2024, my company bought me the course for my own account.
 {% include figure.html path="assets/img/posts/oswe_preparation/web300.png" title="oswe_preparation" class="img-fluid rounded z-depth-1" %}
 
+### Passing exam
+(Names when buying and passing exam are different, because i forgot i have another name in international passport lol)
+{% include figure.html path="assets/img/posts/oswe_preparation/pass_exam.jpg" title="pass_exam" class="img-fluid rounded z-depth-1" %}
+
 ---
