@@ -4,7 +4,13 @@
 
 // Typography
 
-p,
+p {
+  font-family: "Roboto", sans-serif;
+  font-weight: 300;
+  font-style: normal;
+  font-size: 18px;
+}
+
 h1,
 h2,
 h3,
@@ -780,6 +786,7 @@ html.transition *:after {
         color: var(--global-theme-color);
       }
     }
+
   }
 
   .post-content {

@@ -14,7 +14,7 @@ footer_text: >
 keywords: jekyll, jekyll-theme, academic-website, portfolio-website  # add your own keywords or leave empty
 
 lang: en # the language of your site (for example: en, fr, cn, ru, etc.)
-icon: ⚛️  # the emoji used as the favicon (alternatively, provide image name in /assets/img/)
+icon: '/assets/img/favicon.png'  # the emoji used as the favicon (alternatively, provide image name in /assets/img/)
 
 url: https://alshedivat.github.io # the base hostname & protocol for your site
 baseurl:  # the subpath of your site, e.g. /blog/
@@ -118,10 +118,10 @@ bing_site_verification:  # out your bing-site-verification ID (Bing Webmaster)
 # Blog
 # -----------------------------------------------------------------------------
 
-blog_name: space # blog_name will be displayed in your blog page
-blog_nav_title: space # your blog must have a title for it to be displayed in the nav bar
+blog_name: posts # blog_name will be displayed in your blog page
+blog_nav_title: posts # your blog must have a title for it to be displayed in the nav bar
 blog_description: a simple space for all topics
-permalink: /space/:year/:title/
+permalink: /posts/:year/:title/
 
 # Pagination
 pagination:
@@ -251,9 +251,9 @@ jekyll-archives:
     tag: archive-tag
     category: archive-category
   permalinks:
-    year: '/space/:year/'
-    tag: '/space/tag/:name/'
-    category: '/space/category/:name/'
+    year: '/posts/:year/'
+    tag: '/postst/tag/:name/'
+    category: '/posts/category/:name/'
 
 display_tags: ['formatting', 'images', 'links', 'math', 'code'] # these tags will be displayed on the front page of your blog
 display_categories: ['blockquotes'] # these categories will be displayed on the front page of your blog
