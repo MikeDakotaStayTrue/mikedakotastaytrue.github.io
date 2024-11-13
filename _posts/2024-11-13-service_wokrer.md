@@ -204,12 +204,12 @@ statusText:%22OK%22,headers:{"Content-Type%22:%22text/html%22}}))})',{scope:'/'}
 ```
 
 
-Thank you, BlackFan, for post in his Telegram-channel.
+Thank you, BlackFan, for post in Telegram
 
 <br>
 
 
-### C2 с помощью Service Workers
+### C2 using SW
 If you are a bit into RedTeam and are familiar with the concept of Command and Control, then the [Shadow Workers](https://shadow-workers.github.io) tool was created for you, as well as articles using this tool:
 1. [Introduction and Target Application Setup](https://trustedsec.com/blog/persistence-through-service-workers-part-1-introduction-and-target-application-setup)
 2. [C2 Setup and Use](https://trustedsec.com/blog/persistence-through-service-workers-part-2-c2-setup-and-use)
